@@ -252,7 +252,7 @@ def clamp_segment_ts(res: dict,
     return segs
 
 
-def results_to_sentence_srt(res: dict, srt_path,
+def results_to_sentence_srt(res: dict, srt_path = None,
                             end_at_last_word=False,
                             end_before_period=False,
                             start_at_first_word=False,
@@ -293,10 +293,13 @@ def results_to_sentence_srt(res: dict, srt_path,
                                 end_before_period=end_before_period,
                                 start_at_first_word=start_at_first_word)
 
-    to_srt(segs, srt_path, strip=strip)
+    if (srt_path is not None):
+           to_srt(segs, srt_path, strip=strip)
+    else:
+           return to_srt(segs)
 
 
-def results_to_word_srt(res: dict, srt_path, combine_compound=False, strip=False, min_dur: float = None):
+def results_to_word_srt(res: dict, srt_path = None, combine_compound=False, strip=False, min_dur: float = None):
     """
 
     Parameters
@@ -318,7 +321,10 @@ def results_to_word_srt(res: dict, srt_path, combine_compound=False, strip=False
                                        min_dur=min_dur,
                                        strip=strip)
     word_ts = [dict(text=j[0], **j[1]) for j in chain.from_iterable(zip(*i) for i in word_ts)]
-    to_srt(word_ts, srt_path, strip=strip)
+    if (srt_path is not None):
+           to_srt(word_ts, srt_path, strip=strip)
+    else:
+           return to_srt(word_ts)
 
 
 def results_to_token_srt(res: dict, srt_path, combine_compound=False, strip=False, min_dur: float = None):
